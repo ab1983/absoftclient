@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:form>
         Bem-vindo(a) ao <h:outputText value="#{baseBean.title}"/>!
-        <h:panelGroup rendered="#{!gerLoginBean.mainActionMap.isEmpty()}">
+        <h:panelGroup rendered="#{(!gerLoginBean.mainActionMap.isEmpty())}">
             <br/><br/>
             <h:outputText style="font-size: 14px;" value="O que você quer fazer agora?"/>
         </h:panelGroup>
@@ -38,11 +38,7 @@
                         <h:panelGroup>            
                             <p:commandButton style="width: 500px;" icon="ui-icon ui-icon-info" value="Enviar Dúvidas ou Sugestões" oncomplete="questionsOrSuggestionsDlg.show();"/>        
                             <br/><br/>
-                        </h:panelGroup>
-                        <h:panelGroup>            
-                            <p:commandButton style="width: 500px;" icon="ui-icon ui-icon-cart" value="Contratar Licenças e Consultoria" oncomplete="contractPaymentWv.show();"/>        
-                            <br/><br/>
-                        </h:panelGroup>                        
+                        </h:panelGroup>                     
                     </h:panelGroup>
 
                 </td>
@@ -56,10 +52,7 @@
                 </td>
             </tr>
         </table>
-    </h:form>
-    <p:dialog header="Planos AlgoBoss" resizable="false" draggable="false" widgetVar="contractPaymentWv">
-        <ui:include src="views/administration/contract/contractPayment.xhtml"/>
-    </p:dialog>        
+    </h:form> 
     <h:form style="height: 0px;position: absolute;top:0px;">
         <p:dialog header="Dúvidas ou Sugestões" styleClass="questionsOrSuggestionsDlg" widgetVar="questionsOrSuggestionsDlg" resizable="false" width="500px">
             <h:outputText style="font-size: 14px;color:red;" value="Descreva abaixo seu problema para lhe ajudarmos com a solução ideal."/><br/>
@@ -68,15 +61,14 @@
             <p:inputTextarea value="#{gerLoginBean.questionsOrSuggestions}" style="width: 450px;height: 150px;" required="true" requiredMessage="Texto Obrigatório. Favor informar sua mensagem!"/>
             <br/><br/>            
             <p:commandButton value="Enviar" action="#{gerLoginBean.doSendQuestionsOrSuggestions()}" update="@(.questionsOrSuggestionsDlg)" oncomplete="questionsOrSuggestionsDlg.hide();"/>
-            <p:commandButton immediate="true" value="Consultoria Personalizada" oncomplete="questionsOrSuggestionsDlg.hide();contractPaymentWv.show();"/>  
         </p:dialog>            
     </h:form>
-    <h:form style="height: 0px;position: absolute;top:0px;">
+    <h:form style="height: 0px;position: absolute;top:0px;" rendered="#{gerLoginBean.mainActionMap.containsKey('AlgoDev')}">
         <p:panel binding="#{algoContainerBindMain}" style="width: 960px;height: 450px;" styleClass="ui-algo-container" visible="false">
 
         </p:panel>
         <p:panel binding="#{algoPaletteBindMain}" styleClass="elementPanel" toggleable="true" visible="false" header="#{msg['elementPallete']}" collapsed="true">
-            <ui:include src="views/administration/algodev/algodevElementPanel.xhtml"/>
+            <ui:include src="views/app/administration/algodev/algodevElementPanel.xhtml"/>
         </p:panel>           
     </h:form>    
     <h:form style="height: 0px;position: absolute;top:0px;" rendered="#{gerLoginBean.mainActionMap.containsKey('AlgoDev')}">
@@ -90,7 +82,7 @@
                 <p:inputText  placeholder="#{msg.serviceNameExample}" value="#{admAlgodevBean.bean.service.name}" style="width: 450px;" required="true" requiredMessage="Serviço Obrigatório. Favor informar o caminho do menu!"  widgetVar="serviceNameWv"/>
                 <br/><br/>                        
                 <h:outputText style="font-size: 14px;color:red;" value="#{msg.serviceDescriptionHelp}"/>
-                <ui:include src="views/administration/algodev/algodevDataTypePanel.xhtml"/>
+                <ui:include src="views/app/administration/algodev/algodevDataTypePanel.xhtml"/>
                 <br/><br/>            
                 <p:inputTextarea placeholder="#{msg.serviceDescriptionExample}" value="#{admAlgodevBean.bean.service.description}" style="width: 450px;height: 150px;" required="true" requiredMessage="Texto Obrigatório. Favor informar sua mensagem!" widgetVar="serviceDescriptionWv"/>
                 <br/> 
